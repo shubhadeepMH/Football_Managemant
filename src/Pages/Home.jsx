@@ -7,6 +7,7 @@ import { SearchOutlined, EditOutlined, UploadOutlined, ExclamationCircleOutlined
 import { MdMenu, MdGroups, MdTrendingUp, MdDiversity1 } from "react-icons/md";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import '../index.css'
 
 import Papa from 'papaparse'
 import columns from "../Datas/Columns";
@@ -20,7 +21,7 @@ import GlobalStyle from "../Datas/GlobalCss";
 // Import logo image
 import logo from '../assets/footballLogo.png'
 import ImporterModal from "../Components/ImportFilePopUp";
-import { addTeam, updateFileName, updatePlayerData } from "../../Store/Slices/TeamSlice";
+import { addTeam, updateFileName, updateFileNameChangeStatus, updatePlayerData } from "../../Store/Slices/TeamSlice";
 import { NavLink } from "react-router-dom";
 
 
@@ -47,6 +48,7 @@ function Home() {
     const [tempFileName, setTempFileName] = useState('')
     let [players, setPlayers] = useState([]);
     const [importPopUp, setImportPopUp] = useState(false)
+    const [fileNameHasChanged, setFileNameHasChanged] = useState(false)
     const [page, setPage] = useState(1)
     const fileInputRef = useRef(null);
     const [mainPlayersData, setMainPlayersData] = useState();//Storing Players Data to show on the table for this page
@@ -77,7 +79,8 @@ function Home() {
 
     useEffect(() => {
         if (storeData.fileName) {
-
+            // console.log(storeData.fileChangeStatus)
+            setFileNameHasChanged(storeData.fileChangeStatus)
             setMainPlayersData(storeData.data)
             setTeam(storeData.fileName)
         }
@@ -100,6 +103,7 @@ function Home() {
     const handleEditFileNameOk = () => {
         setEditFileNamePopUp(false)
         dispatch(updateFileName(tempFileName))
+        dispatch(updateFileNameChangeStatus(true))
         setTempFileName('')
     }
     // Handling edit file name on cancel
@@ -327,11 +331,11 @@ function Home() {
                     className="bg-gray-800 shadow-sm flex items-center justify-between px-4 py-2"
                     style={{ zIndex: 1 }}
                 >
-                    <div className="items-center">
+                    <div className="items-center group">
                         <div className="text-2xl font-bold text-white">Team Name</div>
                         <div className="ml-4 flex items-center">
                             <div className="text-lg font-medium text-white">{team || "My Team"}</div>
-                            <EditOutlined className={`${team != 'My Team' ? '' : 'invisible'} ml-2 text-white`} onClick={() => setEditFileNamePopUp(true)} />
+                            {mainPlayersData && <EditOutlined className={`${fileNameHasChanged ? 'invisible' : 'visible'} ml-2 text-white group-hover:visible`} onClick={() => setEditFileNamePopUp(true)} />}
                         </div>
                     </div>
                     <div className="flex items-center space-x-3">

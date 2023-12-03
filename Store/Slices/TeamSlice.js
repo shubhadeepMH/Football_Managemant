@@ -8,6 +8,10 @@ const TeamSlice = createSlice({
             newState.data = action.payload;
             return newState;
         },
+        updateFileNameChangeStatus(state,action){
+              // Include the new field in the state
+      return { ...state, fileChangeStatus: action.payload };
+        },
         
         addTeam(state, action) {
             return action.payload;
@@ -20,4 +24,4 @@ const TeamSlice = createSlice({
     }
 })
 export default TeamSlice;
-export const { updatePlayerData, deletePlayer, addTeam, updateFileName } = TeamSlice.actions;
+export const { updatePlayerData, deletePlayer, addTeam, updateFileName,updateFileNameChangeStatus } = TeamSlice.actions;
