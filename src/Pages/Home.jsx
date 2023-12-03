@@ -33,12 +33,7 @@ const { Sider, Header, Content } = Layout;
 function Home() {
     const [visible, setVisible] = useState(false);
     const [team, setTeam] = useState('My Team')
-    const [fileName, setFileName] = useState()
-    const [teamChoose, setTeamChoosed] = useState(false)
-    const [fileColumn, setFileColumn] = useState([]);
-    const [fileValue, setFileValue] = useState([]);
     const [selectedPlayer, setSelectedPlayer] = useState()
-    const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState()
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [editPopUpModal, setEditPopUpModal] = useState(false)
     const [previewTableData, setPreviewTableData] = useState()
